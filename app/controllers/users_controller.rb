@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:profile]
+
   # GET /users
   def index
     @users = User.all
@@ -53,10 +55,9 @@ class UsersController < ApplicationController
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
 
-  before_action :authenticate_user!
-
   def profile
-    @user = current_user
-    puts "Current user: #{@user.inspect}"
+    Rails.logger.debug "Testing logging in profile action"
+    render plain: "Profile action called"
   end
+  
 end

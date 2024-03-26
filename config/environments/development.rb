@@ -17,6 +17,8 @@ Rails.application.configure do
   # Enable server timing
   config.server_timing = true
 
+  config.log_level = :debug
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
@@ -73,4 +75,5 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
 end

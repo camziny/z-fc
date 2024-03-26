@@ -1,0 +1,61 @@
+<div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6 bg-gray-100 flex flex-col items-center sm:flex-row justify-between">
+  <div class="flex items-center mb-4 sm:mb-0">
+    <%= image_tag(player_image_path(@player['id']), alt: @player['name'], class: "player-image mr-4 rounded-full", height: '150', width: '150') %>
+    <h1 class="text-3xl leading-6 font-medium text-gray-900"><%= @player['name'] %></h1>
+  </div>
+  <div class="flex flex-col items-center">
+    <span class="<%= player_color_class(@player['color']) %> rounded-full px-3 py-1 text-2xl font-medium mb-2">
+      <%= @player['rating'] %>
+    </span>
+    <div class="bg-gray-50 px-4 py-2 rounded-lg shadow">
+      <dt class="text-sm font-medium text-gray-500">Rarity</dt>
+      <dd class="mt-1 text-sm text-gray-900"><%= fetch_card_rarity(@player['rarity']) %></dd>
+    </div>
+  </div>
+  </div>
+  <div class="border-t border-gray-200">
+  <h2 class="px-4 py-2 text-lg font-semibold text-gray-800">Team Info</h2>
+  <dl class="sm:grid sm:grid-cols-3 gap-4">
+    <div class="bg-gray-50 px-4 py-5 sm:px-6 rounded-lg shadow">
+      <dt class="text-sm font-medium text-gray-500">Nation</dt>
+      <dd class="mt-1 text-sm text-gray-900"><%= fetch_nation_name(@player['nation']) %></dd>
+      <%= image_tag(nation_image_path(@player['nation']), alt: "Nation Flag", class: "nation-flag mt-2", height: '50', width: '50') %>
+    </div>
+    <div class="bg-gray-50 px-4 py-5 sm:px-6 rounded-lg shadow">
+      <dt class="text-sm font-medium text-gray-500">Club</dt>
+      <dd class="mt-1 text-sm text-gray-900"><%= fetch_club_name(@player['club']) %></dd>
+      <%= image_tag(club_image_path(@player['club']), alt: "Club Flag", class: "club-flag mt-2", height: '50', width: '50') %>
+      </div>
+    <div class="bg-gray-50 px-4 py-5 sm:px-6 rounded-lg shadow">
+      <dt class="text-sm font-medium text-gray-500">League</dt>
+      <dd class="mt-1 text-sm text-gray-900"><%= fetch_league_name(@player['league']) %></dd>
+      <%= image_tag(league_image_path(@player['league']), alt: "League Flag", class: "league-flag mt-2", height: '50', width: '50') %>
+      </div>
+  </dl>
+  </div>
+  <div class="border-t border-gray-200">
+    <h2 class="px-4 py-2 text-lg font-semibold text-gray-800">Performance Stats</h2>
+    <dl class="sm:grid sm:grid-cols-3 gap-4">
+      <% ['pace', 'shooting', 'passing', 'dribbling', 'defending', 'physicality'].each do |stat| %>
+        <div class="bg-gray-50 px-4 py-5 sm:px-6 rounded-lg shadow">
+          <dt class="text-sm font-medium text-gray-500"><%= stat.capitalize %></dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @player[stat] %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </div>
+    <div class="border-t border-gray-200">
+    <h2 class="px-4 py-2 text-lg font-semibold text-gray-800">Personal Info</h2>
+    <dl class="sm:grid sm:grid-cols-3 gap-4">
+      <% ['height', 'weight', 'gender', 'birthDate', 'age', 'league', 'rarity', 'position', 'skillMoves', 'weakFoot', 'foot', 'attackWorkRate', 'defenseWorkRate', 'totalStats', 'totalStatsInGame'].each do |info| %>
+        <div class="bg-gray-50 px-4 py-5 sm:px-6 rounded-lg shadow">
+          <dt class="text-sm font-medium text-gray-500"><%= info.titleize %></dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @player[info] %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </div>  
+  </div>
+</div>
