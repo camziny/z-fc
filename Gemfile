@@ -77,6 +77,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'will_paginate'
 
+gem 'httparty'
+
+
 
 
 

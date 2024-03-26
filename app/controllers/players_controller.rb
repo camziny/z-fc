@@ -1,7 +1,8 @@
-class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy]
+require 'httparty'
 
-  # GET /players
+class PlayersController < ApplicationController
+  before_action :set_player, only: [:edit, :update, :destroy]
+
   def index
     page = params[:page].presence || 1
     players_response = FutdbApiService.fetch_players(page: page)
@@ -71,16 +72,41 @@ class PlayersController < ApplicationController
   
   # GET /players/:id
   def show
-
+    @player = FutdbApiService.fetch_player_details(params[:id])
   end
-  
 
-  # GET /players/new
+  def image
+    player_id = params[:id]
+    api_key = ENV['FUTDB_API_TOKEN']
+    response = HTTParty.get("https://futdb.app/api/players/#{player_id}/image", headers: { "X-AUTH-TOKEN" => api_key })
+    send_data response.body, type: response.headers['Content-Type'], disposition: 'inline'
+  end
+
+  def nation_image
+    nation_id = params[:id]
+    api_key = ENV['FUTDB_API_TOKEN']
+    response = HTTParty.get("https://futdb.app/api/nations/#{nation_id}/image", headers: { "X-AUTH-TOKEN" => api_key })  
+    send_data response.body, type: response.headers['Content-Type'], disposition: 'inline'
+  end  
+
+  def club_image
+    club_id = params[:id]
+    api_key = ENV['FUTDB_API_TOKEN']
+    response = HTTParty.get("https://futdb.app/api/clubs/#{club_id}/image", headers: { "X-AUTH-TOKEN" => api_key })  
+    send_data response.body, type: response.headers['Content-Type'], disposition: 'inline'
+  end 
+
+  def league_image
+    league_id = params[:id]
+    api_key = ENV['FUTDB_API_TOKEN']
+    response = HTTParty.get("https://futdb.app/api/leagues/#{league_id}/image", headers: { "X-AUTH-TOKEN" => api_key })  
+    send_data response.body, type: response.headers['Content-Type'], disposition: 'inline'
+  end 
+
   def new
     @player = Player.new
   end
 
-  # POST /players
   def create
     @player = Player.new(player_params)
     if @player.save
@@ -90,11 +116,9 @@ class PlayersController < ApplicationController
     end
   end
 
-  # GET /players/:id/edit
   def edit
   end
 
-  # PATCH/PUT /players/:id
   def update
     if @player.update(player_params)
       redirect_to @player, notice: 'Player was successfully updated.'
@@ -103,7 +127,6 @@ class PlayersController < ApplicationController
     end
   end
 
-  # DELETE /players/:id
   def destroy
     @player.destroy
     redirect_to players_url, notice: 'Player was successfully destroyed.'
@@ -111,13 +134,11 @@ class PlayersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_player
     @player = Player.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def player_params
     params.require(:player).permit(:name, :position, :identifier)
-  end
+  end  
 end

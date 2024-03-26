@@ -29,21 +29,25 @@ class FutdbApiService
   end
 end
 
-def self.fetch_player_details(player_id)
-  uri = URI("#{BASE_URL}/#{player_id}")
-  request = Net::HTTP::Get.new(uri)
-  request['Accept'] = 'application/json'
-  request['X-AUTH-TOKEN'] = ENV['FUTDB_API_TOKEN']
+class FutdbApiService
+  BASE_URL = 'https://futdb.app/api/players'
 
-  response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-    http.request(request)
-  end
+  def self.fetch_player_details(player_id)
+    uri = URI("#{BASE_URL}/#{player_id}")
+    request = Net::HTTP::Get.new(uri)
+    request['Accept'] = 'application/json'
+    request['X-AUTH-TOKEN'] = ENV['FUTDB_API_TOKEN']
 
-  if response.is_a?(Net::HTTPSuccess)
-    JSON.parse(response.body)
-  else
-    Rails.logger.error "FUTDB API Error: Status: #{response.code}, Body: #{response.body}"
-    nil
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
+
+    if response.is_a?(Net::HTTPSuccess)
+      JSON.parse(response.body)['player']
+    else
+      Rails.logger.error "FUTDB API Error: Status: #{response.code}, Body: #{response.body}"
+      nil
+    end
   end
 end
-end
+
