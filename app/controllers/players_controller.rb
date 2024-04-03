@@ -69,8 +69,6 @@ class PlayersController < ApplicationController
     matrix[m][n]
   end
   
-  
-  # GET /players/:id
   def show
     @player = FutdbApiService.fetch_player_details(params[:id])
   end
@@ -102,6 +100,15 @@ class PlayersController < ApplicationController
     response = HTTParty.get("https://futdb.app/api/leagues/#{league_id}/image", headers: { "X-AUTH-TOKEN" => api_key })  
     send_data response.body, type: response.headers['Content-Type'], disposition: 'inline'
   end 
+
+  def new_for_squad
+    @squad = Squad.find(params[:squad_id])
+    @position = params[:position]
+    players_response = FutdbApiService.fetch_players(page: params[:page])
+    @players = players_response['items'] if players_response && players_response['items'].is_a?(Array)
+    @pagination = PaginationWrapper.new(players_response['pagination'])
+  end  
+  
 
   def new
     @player = Player.new
@@ -139,6 +146,7 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(:name, :position, :identifier)
+    params.require(:player).permit(:name, :position, :identifier, :api_id, :rating, :nation, :club, :league, :pace, :shooting, :passing, :dribbling, :defending, :physicality)
   end  
+
 end

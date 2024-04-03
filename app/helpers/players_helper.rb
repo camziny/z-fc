@@ -24,6 +24,5 @@ module PlayersHelper
     response = HTTParty.get("https://futdb.app/api/rarities/#{rarity_id}", headers: { "X-AUTH-TOKEN" => api_key })
     response.parsed_response['rarity']['name'] if response.code == 200
   end
-
 end
 

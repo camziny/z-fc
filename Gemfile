@@ -79,7 +79,6 @@ gem 'will_paginate'
 
 gem 'httparty'
 
-
-
+gem 'rails-ujs'
 
 

@@ -8,13 +8,20 @@ Rails.application.routes.draw do
   get '/nation_image/:id', to: 'players#nation_image', as: 'nation_image'
   get '/club_image/:id', to: 'players#club_image', as: 'club_image'
   get '/league_image/:id', to: 'players#league_image', as: 'league_image'
+  get '/squads/:squad_id/add_player/:position', to: 'players#new_for_squad', as: 'new_for_squad_player'
+
+
 
 
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :users
   resources :players
-  resources :squads
+  resources :squads do
+    resources :squad_players, only: [:create, :destroy]
+  end  
+  
+  
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

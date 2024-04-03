@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_20_223908) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_28_203006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_20_223908) do
     t.string "identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "api_id"
+    t.integer "rating"
+    t.integer "nation"
+    t.integer "club"
+    t.integer "league"
+    t.integer "pace"
+    t.integer "shooting"
+    t.integer "passing"
+    t.integer "dribbling"
+    t.integer "defending"
+    t.integer "physicality"
   end
 
   create_table "squad_players", force: :cascade do |t|
@@ -27,6 +38,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_20_223908) do
     t.bigint "player_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "position"
     t.index ["player_id"], name: "index_squad_players_on_player_id"
     t.index ["squad_id"], name: "index_squad_players_on_squad_id"
   end
@@ -36,6 +48,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_20_223908) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "gk_player_id"
+    t.integer "rb_player_id"
+    t.integer "rcb_player_id"
+    t.integer "lcb_player_id"
+    t.integer "lb_player_id"
+    t.integer "rcm_player_id"
+    t.integer "cm_player_id"
+    t.integer "lcm_player_id"
+    t.integer "rw_player_id"
+    t.integer "lw_player_id"
+    t.integer "striker_player_id"
     t.index ["user_id"], name: "index_squads_on_user_id"
   end
 

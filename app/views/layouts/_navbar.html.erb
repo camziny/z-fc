@@ -4,6 +4,7 @@
     <div class="flex items-center">
       <% if user_signed_in? %>
       <%= link_to 'Players', players_path, class: 'mr-4' %>
+      <%= link_to 'Squads', squads_path, class: 'mr-4' %>
         <%= button_to 'Logout', destroy_user_session_path, method: :delete, form_class: 'inline', class: 'bg-transparent text-white font-semibold py-2 px-4 rounded hover:bg-white hover:text-gray-800' %>
       <% else %>
         <%= link_to 'Login', new_user_session_path, class: 'text-gray-100 mr-4' %>
