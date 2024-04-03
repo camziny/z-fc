@@ -1,0 +1,41 @@
+<h1 class="text-2xl font-bold text-center mt-4 mb-6 text-gray-200"><%= @squad.name %></h1>
+
+<% attackers = @squad.squad_players.where(position: ['LW', 'ST', 'RW']).sort_by { |sp| ['LW', 'ST', 'RW'].index(sp.position) } %>
+<div class="bg-gray-300 p-4 rounded-lg mt-4 mb-4">
+<div class="text-center mb-2 font-bold text-lg lg:text-xl xl:text-2xl">Attackers</div>
+  <div class="flex flex-wrap justify-center gap-4">
+    <% attackers.each do |squad_player| %>
+      <%= render 'mini_player_card', player: squad_player.player %>
+    <% end %>
+  </div>
+</div>
+
+
+<% midfielders = @squad.squad_players.where(position: ['LCM', 'CM', 'RCM']).sort_by { |sp| ['LCM', 'CM', 'RCM'].index(sp.position) } %>
+<div class="bg-gray-300 p-4 rounded-lg mb-4">
+<div class="text-center mb-2 font-bold text-lg lg:text-xl xl:text-2xl">Midfielders</div>
+  <div class="flex flex-wrap justify-center gap-4">
+    <% midfielders.each do |squad_player| %>
+      <%= render 'mini_player_card', player: squad_player.player %>
+    <% end %>
+  </div>
+</div>
+
+<% defenders = @squad.squad_players.where(position: ['LB', 'LCB', 'RCB', 'RB']).sort_by { |sp| ['LB', 'LCB', 'RCB', 'RB'].index(sp.position) } %>
+<div class="bg-gray-300 p-4 rounded-lg mb-4">
+<div class="text-center mb-2 font-bold text-lg lg:text-xl xl:text-2xl">Defenders</div>
+  <div class="flex flex-wrap justify-center gap-4">
+    <% defenders.each do |squad_player| %>
+      <%= render 'mini_player_card', player: squad_player.player %>
+    <% end %>
+  </div>
+</div>
+
+<div class="bg-gray-300 p-4 rounded-lg mb-4">
+<div class="text-center mb-2 font-bold text-lg lg:text-xl xl:text-2xl">Goalkeeper</div>
+  <div class="flex flex-wrap justify-center gap-4">
+  <% @squad.squad_players.where(position: 'GK').each do |squad_player| %>
+    <%= render 'mini_player_card', player: squad_player.player %>
+  <% end %>
+</div>
+</div>

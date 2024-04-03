@@ -1,0 +1,39 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="bg-gray-600 rounded-lg p-10">
+  <h1 class="text-3xl font-bold text-white mb-6">My Squads</h1>
+  <div class="mb-6">
+    <%= link_to 'New Squad', new_squad_path, class: 'inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600' %>
+  </div>
+  <ul class="bg-white rounded-lg shadow divide-y divide-gray-200">
+    <% @my_squads.each do |squad| %>
+      <li class="px-6 py-6 flex justify-between items-center">
+        <%= link_to squad.name, squad_path(squad), class: 'text-xl font-medium text-gray-900 mr-8' %>
+        <div>
+          <%= link_to edit_squad_path(squad), class: 'inline-flex items-center bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded hover:bg-gray-400 mr-4' do %>
+            <span class="material-icons">edit</span>
+          <% end %>
+          <%= button_to squad_path(squad), method: :delete, data: { confirm: 'Are you sure?' }, class: 'inline-flex items-center bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded hover:bg-gray-400' do %>
+            <span class="material-icons">delete</span>
+          <% end %>      
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  </div>
+
+  <div class="bg-gray-600 rounded-lg p-10 mt-5">
+  <h1 class="text-3xl font-bold text-white mb-6 mt-12">User Squads</h1>
+  <ul class="bg-white rounded-lg shadow divide-y divide-gray-200">
+    <% @user_squads.each do |squad| %>
+      <li class="px-6 py-6 flex justify-between items-center">
+        <%= link_to squad.name, squad_path(squad), class: 'text-xl font-medium text-gray-900 mr-8' %>
+        <div>
+          <%= link_to 'View', squad_path(squad), class: 'inline-flex items-center bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded hover:bg-gray-400' %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+</div>

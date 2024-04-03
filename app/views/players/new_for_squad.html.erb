@@ -1,0 +1,10 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<h1 class='text-gray-200 font-semibold mb-2'> Choose Player <%= @squad.name %> - Position: <%= @position %></h1>
+
+<%= render 'players/player_list', players: @players, squad_builder: true, position: @position, squad_id: @squad.id %>
+<div class='text-gray-200 mb-2'>
+<%= link_to squad_path(@squad), class: 'flex items-center text-blue-500 hover:text-blue-700' do %>
+  <span class="material-icons">arrow_back</span>
+  <span class="ml-2">Back to Squad</span>
+<% end %>
+</div>

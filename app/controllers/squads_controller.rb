@@ -1,21 +1,26 @@
 class SquadsController < ApplicationController
   before_action :set_squad, only: [:show, :edit, :update, :destroy]
 
-  # GET /squads
   def index
-    @squads = Squad.all
+    @my_squads = current_user.squads.order(created_at: :desc)
+    @user_squads = Squad.where.not(user_id: current_user.id).order(created_at: :desc)
   end
 
-  # GET /squads/:id
   def show
   end
 
-  # GET /squads/new
   def new
-    @squad = Squad.new
+    if session[:squad_id]
+      @squad = current_user.squads.find_by(id: session[:squad_id])
+    end
+  
+    unless @squad
+      @squad = current_user.squads.create
+      session[:squad_id] = @squad.id
+    end
   end
+  
 
-  # POST /squads
   def create
     @squad = Squad.new(squad_params)
     if @squad.save
@@ -25,12 +30,13 @@ class SquadsController < ApplicationController
     end
   end
 
-  # GET /squads/:id/edit
   def edit
+    @squad = Squad.find(params[:id])
   end
+  
 
-  # PATCH/PUT /squads/:id
   def update
+    puts "Debug: Params - #{params.inspect}"
     if @squad.update(squad_params)
       redirect_to @squad, notice: 'Squad was successfully updated.'
     else
@@ -38,7 +44,6 @@ class SquadsController < ApplicationController
     end
   end
 
-  # DELETE /squads/:id
   def destroy
     @squad.destroy
     redirect_to squads_url, notice: 'Squad was successfully destroyed.'
@@ -46,14 +51,13 @@ class SquadsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_squad
     @squad = Squad.find(params[:id])
+    puts "Debug: #{@squad.inspect}"
   end
 
-  # Only allow a list of trusted parameters through.
   def squad_params
-    params.require(:squad).permit(:name, :user_id)
-  end
+    params.require(:squad).permit(:name, :user_id, squad_players_attributes: [:id, :player_id, :position, :_destroy])
+  end  
 end
 

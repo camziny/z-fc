@@ -1,0 +1,13 @@
+<h1 class="text-xl font-bold mb-4 text-gray-200">Edit Squad: <%= @squad.name %></h1>
+
+<%= form_with(model: @squad, local: true, method: :patch) do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, class: "block text-sm font-medium text-gray-200" %>
+    <%= form.text_field :name, class: "text-gray-800 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+  </div>
+  <div class="flex justify-center mt-6">
+    <%= form.submit "Update Squad Name", class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Squads', squads_path, class: 'text-blue-400 hover:underline mt-4 block' %>
